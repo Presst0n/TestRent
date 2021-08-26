@@ -4,7 +4,7 @@
 
 <div class="text-center">
 
-    <button id="ShowBooksBtn" class="btn btn-success btn-sm">Pokaż ksiąki</button>
+    <button id="ShowBooksBtn" class="btn btn-primary btn-sm">Pokaż ksiąki</button>
     @*<button id="test" class="btn btn-success">Edytuj książkę</button>*@
 </div>
 
@@ -17,37 +17,42 @@
         Dodaj nową książkę
     </button>
 
-    <button id="ReturnBookBtn" class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseReturnBookForm" aria-expanded="false" aria-controls="collapseReturnBookForm">
-        Zwróć książkę
+    @*<button id="ReturnBookBtn" class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseReturnBookForm" aria-expanded="false" aria-controls="collapseReturnBookForm">
+            Zwróć książkę
+        </button>*@
+
+    <button id="RentedBooksBtn" class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseRentedBooks" aria-expanded="false" aria-controls="collapseRentedBooks">
+        Wypożyczone książki
     </button>
 </p>
 
-<div class="collapse" id="collapseReturnBookForm">
-    <div class="panel panel-primary align-content-center" align="center" style="margin-bottom:100px">
-        <div class="panel-heading">
 
-        </div>
-        <div class="panel-body">
-            <div class="form-group col-md-5">
-                <label>Tytuł zwracanej książki</label>
-                <input type="text" name="BookTitle" id="BookTitle" class="form-control" required="" />
+
+
+@*<div class="collapse" id="collapseReturnBookForm">
+        <div class="panel panel-primary align-content-center" align="center" style="margin-bottom:100px">
+            <div class="panel-heading">
+
             </div>
+            <div class="panel-body">
+                <div class="form-group col-md-5">
+                    <label>Identyfikator transakcji</label>
+                    <input type="text" name="TransactionId" id="TransactionId" class="form-control" required="" />
+                </div>
 
-            <div class="form-group col-md-1">
-                <div style="float: right; display:inline-block;">
+                <div class="form-group col-md-auto">
                     <input class="btn btn-primary" name="submitBookReturnButton" id="BookReturnBtn" value="Zwróć" type="button">
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </div>*@
 
 <div class="collapse" id="collapseAddBookForm">
     <div class="panel panel-primary align-content-center" align="center" style="margin-bottom:100px">
-        <div class="panel-heading">
-            <h3 id="AddBookHeader" class="panel-title d-none">Dodaj książkę</h3>
-            <h3 id="EditBookHeader" class="panel-title d-none">Edytuj książkę</h3>
-        </div>
+        @*<div class="panel-heading">
+                <h3 id="AddBookHeader" class="panel-title d-none">Dodaj książkę</h3>
+                <h3 id="EditBookHeader" class="panel-title d-none">Edytuj książkę</h3>
+            </div>*@
         <div class="panel-body">
             <div class="form-group col-md-5">
                 <label>Tytuł książki</label>
@@ -68,6 +73,11 @@
                 <input type="text" name="BookGenre" id="BookGenre" class="form-control" placeholder="np: horror, thriller, sci-fi..." required="" />
             </div>
 
+            <div class="form-group col-md-5">
+                <label>Liczba książek</label>
+                <input type="number" name="AmountOfBooksInput" id="AmountOfBooksInput" class="form-control" placeholder="" required="" />
+            </div>
+
             <div class="form-group col-md-1">
                 <div style="float: right; display:inline-block;">
                     <input class="btn btn-primary" name="submitBookButton" id="BookSaveBtn" value="Dodaj" type="button">
@@ -77,6 +87,22 @@
     </div>
 </div>
 
+<div class="collapse" id="collapseRentedBooks">
+    <hr />
+    <table id="RentedBooksTable" class="table table-bordered table-striped table-responsive table-hover">
+        <thead>
+            <tr>
+                <th align="left">ID</th>
+                <th align="left" width='45%'>Tytuł książki</th>
+                <th align="left" width='20%'>Klient</th>
+                <th align="left">Data wypożyczenia</th>
+                <th align="left">Data zwrotu</th>
+                <th align="right">Opcje</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
 <div id="BooksTableContainer" class="col-md-12" style="margin:25px 0">
 
@@ -85,12 +111,13 @@
         <thead>
             <tr>
                 <th align="left" class="productth">ID</th>
-                <th align="left" class="productth">Tytuł</th>
+                <th align="left" class="productth" width='50%'>Tytuł</th>
+                <th align="left" class="productth">Liczba książek</th>
                 <th align="left" class="productth">Autor</th>
                 <th align="left" class="productth">Gatunek</th>
                 <th align="left" class="productth">Data wydania</th>
                 @*<th align="left" class="productth">Data wypożyczenia</th>
-                <th align="left" class="productth">Data zwrotu</th>*@
+                    <th align="left" class="productth">Data zwrotu</th>*@
                 <th align="right" class="productth">Opcje</th>
             </tr>
         </thead>
@@ -103,20 +130,29 @@
     <div class="row justify-content-md-center">
         <div class="col-auto">
             <label class="font-weight-bold">Tytuł książki: </label>
-            <label id="BookNameToRentLabel" class="font-weight-normal" style="margin-left:5px">Dzikie pchły </label>
+            <label id="BookNameToRentLabel" class="font-weight-normal" style="margin-left:5px"></label>
         </div>
         <div class="col-auto">
             <label class="font-weight-bold">Dostępne: </label>
-            <label id="BooksAmountLabel" class="font-weight-normal" style="margin-left:5px">25</label>
+            <label id="BooksAmountLabel" class="font-weight-normal" style="margin-left:5px">0</label>
+        </div>
+
+        <div class="col-auto d-none">
+            <label class="font-weight-bold">ID : </label>
+            <label id="BookIdLabel" class="font-weight-normal" style="margin-left:5px">0</label>
         </div>
     </div>
 
     <div class="row justify-content-md-center" style="margin:25px auto;">
         <div class="panel panel-primary align-content-center" align="center" style="margin-bottom:100px">
             <div class="panel-heading" style="margin:15px auto">
-                <h4  class="panel-title" >Wprowadź infromację o kliencie.</h4>
+                <h4 class="panel-title">Wprowadź infromację o kliencie.</h4>
             </div>
             <div class="panel-body">
+                <div class="form-group col-md-auto d-none">
+                    <label>Imię</label>
+                    <input id="HiddenClientId" type="text" name="HiddenClientId" />
+                </div>
                 <div class="form-group col-md-auto">
                     <label>Imię</label>
                     <input type="text" name="FirstName" id="FirstName" class="form-control" required="" />
@@ -143,7 +179,7 @@
 
                 <div class="form-group col-md-auto">
                     <label>Data zwrotu</label>
-                    <input  type="date" name="TenancyDate" id="TenancyDateInput" onchange="validateDateInput()" class="form-control" placeholder="" required="" />
+                    <input type="date" name="ReturnDateInput" id="ReturnDateInput" class="form-control" required="" />
                 </div>
 
                 <div class="form-group col-md-auto">
@@ -156,12 +192,317 @@
     </div>
 
 </div>
+<div id="ClientsTableContainer" class="col-md-auto d-none" style="margin:25px 0">
+    <h4 class="panel-title text-center">Klienci z bazy danych:</h4>
+    <hr />
+    <table id="ClientsTable" class="table table-bordered table-striped table-responsive table-hover">
+        <thead>
+            <tr>
+                <th align="left">ID</th>
+                <th align="left" width="50%">Imię i nazwisko</th>
+                <th align="left">Miasto</th>
+                <th align="left" width="25%">Ulica</th>
+                <th align="left">Kod pocztowy</th>
+                <th align="right">Opcje</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edytuj książkę</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="m-bookTitle" class="col-form-label">Tytuł książki:</label>
+                        <input type="text" class="form-control" id="m-bookTitle">
+                        <input type="text" class="form-control d-none" id="m-id">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="m-Author" class="col-form-label">Autor:</label>
+                        <input type="text" class="form-control" id="m-Author">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="m-Amount" class="col-form-label">Liczba książek:</label>
+                        <input type="number" class="form-control" id="m-Amount">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="m-Genre" class="col-form-label">Gatunek:</label>
+                        <input type="text" class="form-control" id="m-Genre">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="m-ReleaseBookDate" class="col-form-label">Data wydania:</label>
+                        <input type="text" class="form-control" id="m-ReleaseBookDate">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                <button id="SaveChanges" type="button" class="btn btn-primary">Zapisz</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @section Scripts
 {
     <script type="text/javascript">
+
+        $('#SaveChanges').click(() => {
+
+            let book = {};
+            book.bookId = $('#m-id').val();
+            book.title = $('#m-bookTitle').val();
+            book.author = $('#m-Author').val();
+            book.amountOfBooks = $('#m-Amount').val();
+            book.genre = $('#m-Genre').val();
+            book.publishingDate = $('#m-ReleaseBookDate').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateBook")',
+                data: JSON.stringify(book),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (d) {
+                    console.info(d.message);
+                    LoadData();
+                    clearAddClientFields();
+                },
+                error: function (ex) {
+                    alert("Mamy lipę Panie, i bynajmniej nie chodzi tu o drzewo...");
+                }
+
+            });
+        })
+
+
+        function editBook(item) {
+
+            let bookId = $(item).parentsUntil('tbody').find('#bookId')[0].innerHTML;
+            let title = $(item).parentsUntil('tbody').find('#bbookTitle')[0].innerHTML;
+            let author = $(item).parentsUntil('tbody').find('#bbookAuthor')[0].innerHTML;
+            let amount = $(item).parentsUntil('tbody').find('#bAmount')[0].innerHTML;
+            let genre = $(item).parentsUntil('tbody').find('#bbookGenre')[0].innerHTML;
+            let pDate = $(item).parentsUntil('tbody').find('#bbookPublishingDate')[0].innerHTML;
+
+            $(item).parentsUntil('form').find('#m-id').val(bookId);
+            $(item).parentsUntil('form').find('#m-bookTitle').val(title);
+            $(item).parentsUntil('form').find('#m-Author').val(author);
+            $(item).parentsUntil('form').find('#m-Amount').val(amount);
+            $(item).parentsUntil('form').find('#m-Genre').val(genre);
+            $(item).parentsUntil('form').find('#m-ReleaseBookDate').val(pDate);
+
+        }
+
+
+        $('#RentedBooksBtn').click(() => {
+            loadRentedBooks();
+            
+        })
+
+        function deleteTransaction(item) {
+            let transactionId = $(item).parentsUntil('tbody').find('#tId')[0].innerHTML;
+
+            $.ajax({
+                type: 'DELETE',
+                url: '/Transaction/DeleteTransaction',
+                data: JSON.stringify(transactionId),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    loadRentedBooks();
+                },
+                error: function (ex) {
+                    console.error(ex.Message);
+                }
+            });
+        }
+
+        function loadRentedBooks() {
+            $("#RentedBooksTable tbody tr").remove();
+
+            $.ajax({
+                type: 'GET',
+                url: '/Transaction/GetTransactions',
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data, function (i, t) {
+                        var rows = "<tr>"
+                            + "<td id='tId'>" + t.id + "</td>"
+                            + "<td id='tBookTitle'>" + t.bookTitle + "</td>"
+                            + "<td id='tFname'>" + t.clientFirstName + " " + t.clientLastName + "</td>"
+                            + "<td id='tTenancyDate'>" + t.tenancyDate + "</td>"
+                            + "<td id='tReturnDate'>" + t.returnDate + "</td>"
+                            + `<td id='tOptTh'>
+                                <button type='button' id="SelectThisClientBtn" class="btn btn-success btn-sm" onclick='deleteTransaction(this)' style="padding:4px; margin-bottom:3px">Zwróć</button></br>
+                               </td>`
+                            + "</tr>";
+                        $('#RentedBooksTable tbody').append(rows);
+                    });
+                },
+                error: function (ex) {
+                    console.error(ex.Message);
+                }
+            });
+        }
+
+        function selectClient(item) {
+
+            let splittedName = $(item).parentsUntil('tbody').find('#FullNameTh')[0].innerHTML.split(' ');
+
+            $('#HiddenClientId').val($(item).parentsUntil('tbody').find('#IdTh')[0].innerHTML);
+            $('#FirstName').val(splittedName[0]);
+            $('#LastName').val(splittedName[1]);
+            $('#City').val($(item).parentsUntil('tbody').find('#CityTh')[0].innerHTML);
+            $('#Street').val($(item).parentsUntil('tbody').find('#StreetTh')[0].innerHTML);
+            $('#PostalCode').val($(item).parentsUntil('tbody').find('#PostalTh')[0].innerHTML);
+
+        }
+
+        function deleteClient(item) {
+            let clientId = $(item).parentsUntil('tbody').find('#IdTh')[0].innerHTML;
+
+            $.ajax({
+                type: 'DELETE',
+                url: '/Client/DeleteClient',
+                data: JSON.stringify(clientId),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    LoadClients();
+                    let bNumber = parseInt($('#BooksAmountLabel').html()) + data.data.returnedBooks;
+                    $('#BooksAmountLabel').html(bNumber);
+                },
+                error: function (ex) {
+                    console.log(ex.Message);
+                }
+            });
+        }
+
+        $('#ConfirmRentingBtn').click(() => {
+
+            let client = {};
+
+            let booksNumber = parseInt($('#BooksAmountLabel').html());
+
+            if (booksNumber < 1) {
+
+                $('#ConfirmRentingBtn').attr('disabled', 'true')
+                alert('Przykro mi ale nie ma więcej książek.');
+                clearAddClientFields();
+                return;
+            }
+
+            let hiddenClientId = $('#HiddenClientId').val();
+
+            if (hiddenClientId === '') {
+                client.firstName = $('#FirstName').val();
+                client.lastName = $('#LastName').val();
+                client.city = $('#City').val();
+                client.street = $('#Street').val();
+                client.postalCode = $('#PostalCode').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Client/CreateClient',
+                    data: JSON.stringify(client),
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (d) {
+                        console.info(d.message);
+                        LoadClients();
+                        createTransaction(d.data.clientId);
+
+                    },
+                    error: function (ex) {
+                        alert("Mamy lipę Panie, i bynajmniej nie chodzi tu o drzewo...");
+                    }
+                });
+            } else {
+                createTransaction(hiddenClientId);
+            }
+        });
+
+        function substractBook() {
+            let newBooksAmount = parseInt($('#BooksAmountLabel').html()) - 1;
+            $('#BooksAmountLabel').html(newBooksAmount);
+        }
+
+        function createTransaction(clientId) {
+
+            let transaction = {};
+
+            transaction.clientId = clientId;
+            transaction.rentedBookId = $('#BookIdLabel')[0].innerHTML;
+            transaction.returnDate = $('#ReturnDateInput').val();
+            /*transaction.returnDate = new Date().toLocaleDateString(); */
+
+            $.ajax({
+                type: 'POST',
+                url: '/Transaction/CreateTransaction',
+                data: JSON.stringify(transaction),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (d) {
+                    console.info(d.message);
+                    substractBook();
+                    clearAddClientFields();
+                },
+                error: function (ex) {
+                    alert("Mamy lipę Panie, i bynajmniej nie chodzi tu o drzewo...");
+                }
+
+            });
+        }
+
+
+        function LoadClients() {
+
+            $("#ClientsTable tbody tr").remove();
+
+            $.ajax({
+                type: 'GET',
+                url: '/Client/GetClients',
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data, function (i, client) {
+                        var rows = "<tr>"
+                            + "<td id='IdTh'>" + client.clientId + "</td>"
+                            + "<td id='FullNameTh'>" + client.firstName + " " + client.lastName + "</td>"
+                            + "<td id='CityTh'>" + client.city + "</td>"
+                            + "<td id='StreetTh'>" + client.street + "</td>"
+                            + "<td id='PostalTh'>" + client.postalCode + "</td>"
+                            + `<td id='OptTh'>
+                                <button type='button' id="SelectThisClientBtn" class="btn btn-secondary btn-sm" onclick='selectClient(this)' style="padding:4px; margin-bottom:3px">Wybierz</button></br>
+                                <button type='button' id="DeleteThisClientBtn" class="btn btn-secondary btn-sm" onclick='deleteClient(this)' style="padding:4px 14px; margin-bottom:3px">Usuń</button></br>
+                               </td>`
+                            + "</tr>";
+                        $('#ClientsTable tbody').append(rows);
+                    });
+                },
+                error: function (ex) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                    alert("StackTrace: " + r.StackTrace);
+                    alert("ExceptionType: " + r.ExceptionType);
+                }
+            });
+            return false;
+        }
 
         function LoadData() {
 
@@ -175,16 +516,17 @@
                     $.each(data, function (i, book) {
                         var rows = "<tr>"
                             + "<td id='bookId' class='prtoducttd'>" + book.bookId + "</td>"
-                            + "<td class='prtoducttd' width='40%'>" + book.title + "</td>"
-                            + "<td class='prtoducttd'>" + book.author + "</td>"
-                            + "<td class='prtoducttd'>" + book.genre + "</td>"
-                            + "<td class='prtoducttd'>" + book.publishingDate + "</td>"
+                            + "<td id='bbookTitle' class='prtoducttd'>" + book.title + "</td>"
+                            + "<td id='bAmount' class='prtoducttd'>" + book.amountOfBooks + "</td>"
+                            + "<td id='bbookAuthor' class='prtoducttd'>" + book.author + "</td>"
+                            + "<td id='bbookGenre' class='prtoducttd'>" + book.genre + "</td>"
+                            + "<td id='bbookPublishingDate' class='prtoducttd'>" + book.publishingDate + "</td>"
                             //+ "<td class='prtoducttd'>" + book.tenancyDate + "</td>"
                             //+ "<td class='prtoducttd'>" + book.returnDate + "</td>"
                             + `<td class='prtoducttd'>
-                                    <button type='button' id="RentBtn" class="btn btn-success btn-sm" onclick='RentBook(this)' style="padding:4px; margin-bottom:3px">Wypożycz</button></br>
-                                    <button type='button' id="EditBtn" class="btn btn-primary btn-sm" onclick='' style="padding:4px 16px; margin-bottom:3px">Edytuj</button></br>
-                                    <button type='button' id="DeleteBtn" class="btn btn-danger btn-sm" onclick='deleteBook(this)' style="padding:4px 19px; margin-bottom:3px">Usuń</button>
+                                    <button type='button' id="RentBtn" class="btn btn-secondary btn-sm" onclick='RentBook(this)' style="padding:4px; margin-bottom:3px">Wypożycz</button></br>
+                                    <button type='button' id="EditBtn" class="btn btn-secondary btn-sm" onclick='editBook(this)' data-toggle="modal" data-target="#exampleModal" style="padding:4px 16px; margin-bottom:3px">Edytuj</button></br>
+                                    <button type='button' id="DeleteBtn" class="btn btn-secondary btn-sm" onclick='deleteBook(this)' style="padding:4px 19px; margin-bottom:3px">Usuń</button>
                                </td>`
                             + "</tr>";
                         $('#BooksTable tbody').append(rows);
@@ -202,8 +544,9 @@
 
         function RentBook(book) {
             let bookId = $(book).parentsUntil('tbody').find('#bookId')[0].innerHTML;
-            
-
+            LoadClients();
+            $('#ConfirmRentingBtn').removeAttr('disabled');
+            $('#ClientsTableContainer').removeClass('d-none');
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetBook")',
@@ -213,7 +556,9 @@
                 success: function (data) {
 
                     $('#BookNameToRentLabel').html(data.title);
-                    
+                    $('#BooksAmountLabel').html(data.amountOfBooks);
+                    $('#BookIdLabel').html(data.bookId);
+                    $('#RentedBooksBtn').addClass('d-none');
                 },
                 error: function (ex) {
                     var r = jQuery.parseJSON(response.responseText);
@@ -231,8 +576,6 @@
 
         function deleteBook(book) {
             let bookId = $(book).parentsUntil('tbody').find('#bookId')[0].innerHTML;
-
-            /*JSON.stringify({ 'bookId': `${bookId}` })*/
 
             $.ajax({
                 type: 'DELETE',
@@ -256,7 +599,7 @@
         $(document).ready(() => {
             console.info("No hej");
             LoadData();
-            
+
         });
 
         $("#BookSaveBtn").click(() => {
@@ -267,6 +610,7 @@
             book.author = $('#BookAuthor').val();
             book.genre = $('#BookGenre').val();
             book.publishingDate = $('#BookPublishingDate').val();
+            book.amountOfBooks = $('#AmountOfBooksInput').val();
 
             $.ajax({
                 type: 'POST',
@@ -277,36 +621,54 @@
                 success: function (d) {
                     console.info(d.message);
                     LoadData();
+                    clearAddBookFields();
                 },
                 error: function (ex) {
                     alert("Mamy lipę Panie, i bynajmniej nie chodzi tu o drzewo...");
                 }
 
             });
+
+
         });
+
+        function clearAddBookFields() {
+            $('#BookTitle').val('');
+            $('#BookAuthor').val('');
+            $('#BookGenre').val('');
+            $('#BookPublishingDate').val('');
+            $('#AmountOfBooksInput').val('');
+        }
+
+        function clearAddClientFields() {
+            $('#FirstName').val('');
+            $('#LastName').val('');
+            $('#Street').val('');
+            $('#PostalCode').val('');
+            $('#City').val('');
+            $('#TenancyDateInput').val('');
+            $('#ReturnDateInput').val('');
+            $('#HiddenClientId').val('');
+        }
 
 
         $("#ShowBooksBtn").click(() => {
             LoadData();
             $('#RentBookContainer').addClass('d-none');
-
+            $('#ClientsTableContainer').addClass('d-none');
             $('#BooksTableContainer').removeClass('d-none');
             $('#AddNewBookBtn').removeClass('d-none');
+            $('#RentedBooksBtn').attr('aria-expanded', 'false');
+            $('#RentedBooksBtn').attr('data-toggle', 'collapse');
+            $('#collapseRentedBooks').removeClass('show');
+            $('#RentedBooksBtn').removeClass('d-none');
         });
 
-        function validateDateInput() {
 
-            let dateInput = $('#TenancyDateInput');
-            dateInput.css('border', '1px solid lightgrey');
-            var givenDate = dateInput.val();
-            var currentDate = new Date().toLocaleDateString();
-            givenDate = new Date(givenDate).toLocaleDateString();
 
-            if (givenDate < currentDate) {
-                alert('Wprowadzona data nie może być starsza niż obecna.');
-                dateInput.css('border', '2px solid red');
-            }
-        }
+        $('#RentedBooksBtn').click(() => {
+            $('#BooksTableContainer').toggleClass('d-none');
+        })
 
     </script>
 }

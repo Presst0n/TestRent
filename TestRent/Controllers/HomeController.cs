@@ -50,14 +50,56 @@ namespace TestRent.Controllers
             if (bookDb != null)
                 return Json(new { Message = "Dana książka znajduje już się w naszym systemie." });
 
-            await _db.Books.AddAsync(book);
-            await _db.SaveChangesAsync();
+            //var newClient = new ClientDb
+            //{
+            //    City = "Warszawa",
+            //    FirstName = "Jędrzej",
+            //    LastName = "Paluszkiewicz",
+            //    PostalCode = "00 - 006",
+            //    Street = "Piłsudskiego 19/3",
+            //};
 
+
+            try
+            {
+                //await _db.Clients.AddAsync(newClient);
+                await _db.Books.AddAsync(book);
+                await _db.SaveChangesAsync();
+                //var loadedClient = await _db.Clients.FirstOrDefaultAsync();
+
+                //if (loadedClient != null)
+                //{
+                //    var loadedBook = await _db.Books.FindAsync(2);
+
+                //    if (loadedBook != null)
+                //    {
+
+                //        var newTransaction = new TransactionDb
+                //        {
+                //            TransactionGuid = Guid.NewGuid(),
+                //            Client = loadedClient,
+                //            RentedBook = loadedBook
+                //        };
+
+                //        await _db.Transactions.AddAsync(newTransaction);
+                //        await _db.SaveChangesAsync();
+                //    }
+                //}
+
+
+                //var loadedTransaction = await _db.Transactions.FirstOrDefaultAsync();
+                //var loadedClient = await _db.Clients.Include(c => c.Transactions).ThenInclude(e => e.RentedBook).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            
             return Json(new { Message = "Książka została dodana pomyślnie." });
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateBook(BookDb book)
+        public async Task<IActionResult> UpdateBook([FromBody] BookDb book)
         {
             var bookDb = await _db.Books.FindAsync(book.BookId);
 
@@ -67,8 +109,9 @@ namespace TestRent.Controllers
             bookDb.Author = book.Author;
             bookDb.Genre = book.Genre;
             bookDb.PublishingDate = book.PublishingDate;
-            bookDb.ReturnDate = book.ReturnDate;
-            bookDb.TenancyDate = book.TenancyDate;
+            bookDb.AmountOfBooks = book.AmountOfBooks;
+            //bookDb.ReturnDate = book.ReturnDate;
+            //bookDb.TenancyDate = book.TenancyDate;
             bookDb.Title = book.Title;
 
             await _db.SaveChangesAsync();

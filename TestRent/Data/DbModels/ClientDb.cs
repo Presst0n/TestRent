@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace TestRent.Data.DbModels
 {
-    public class BookDb
+    public class ClientDb
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BookId { get; set; }
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public string Genre { get; set; }
-        public string PublishingDate { get; set; }
-        public int AmountOfBooks { get; set; }
+        public int ClientId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string PostalCode { get; set; }
 
         public virtual TransactionDb Transaction { get; set; }
     }

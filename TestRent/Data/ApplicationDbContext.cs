@@ -10,11 +10,13 @@ namespace TestRent.Data
     public class ApplicationDbContext : DbContext
     {
         public DbSet<BookDb> Books { get; set; }
+        public DbSet<ClientDb> Clients { get; set; }
+        public DbSet<TransactionDb> Transactions { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            //Database.EnsureCreated();
+            Database.EnsureCreated();
         }
 
 
@@ -32,7 +34,8 @@ namespace TestRent.Data
                     Title = "Ender's Shadow",
                     Author = "Orson Scott Card",
                     Genre = "Science Fiction",
-                    PublishingDate = "15 grudnia, 2000"
+                    PublishingDate = "15 grudnia, 2000",
+                    AmountOfBooks = 12
                 },
                 new BookDb
                 {
@@ -40,7 +43,8 @@ namespace TestRent.Data
                     Title = "Children of Húrin",
                     Author = "J. R. R. Tolkien",
                     Genre = "Fantasy",
-                    PublishingDate = "1 sierpnia, 2013"
+                    PublishingDate = "1 sierpnia, 2013",
+                    AmountOfBooks = 17
                 },
                 new BookDb
                 {
@@ -48,7 +52,8 @@ namespace TestRent.Data
                     Title = "Silmarillion",
                     Author = "J. R. R. Tolkien",
                     Genre = "Fantasy",
-                    PublishingDate = "2 września, 1983"
+                    PublishingDate = "2 września, 1983",
+                    AmountOfBooks = 5
                 },
                 new BookDb
                 {
@@ -56,9 +61,11 @@ namespace TestRent.Data
                     Title = "Dune",
                     Author = "Frank Herbert",
                     Genre = "Science Fiction",
-                    PublishingDate = "29 maja, 2007"
+                    PublishingDate = "29 maja, 2007",
+                    AmountOfBooks = 15,
                 }
             );
+
 
             base.OnModelCreating(modelBuilder);
         }
